@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  description: APIs for creating and managing vacancies
+  title: Vacancies API
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8080/api
+    description: Base path of the API
+
+tags:
+  - name: VacanciesAPI
+    description: APIs for managing vacancies
+
+paths:
+  /vacancies:
+    post:
+      summary: Create a new vacancy
+      tags:
+        - VacanciesAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  example: Client Name
+                requirements:
+                  type: string
+                  example: Job requirements and description
+      responses:
+        '201':
+          description: Vacancy created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /vacancies/{id}/publish:
+    post:
+      summary: Publish a vacancy on the website
+      tags:
+        - VacanciesAPI
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Vacancy published successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Vacancy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /vacancies/{id}/share:
+    post:
+      summary: Share a vacancy with vendors
+      tags:
+        - VacanciesAPI
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Vacancy shared successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Vacancy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+components:
+  schemas:
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Vacancy created successfully

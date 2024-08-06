@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  description: APIs for planning client intake and creating employment contracts
+  title: Client Intake and Contracts API
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8080/api
+    description: Base path of the API
+
+tags:
+  - name: ClientIntakeAPI
+    description: APIs for managing client intake and employment contracts
+
+paths:
+  /intake:
+    post:
+      summary: Plan client intake
+      tags:
+        - ClientIntakeAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
+                  type: string
+                  example: client123
+                intakeDetails:
+                  type: string
+                  example: Intake details and plan
+      responses:
+        '201':
+          description: Client intake planned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /contracts:
+    post:
+      summary: Create an employment contract
+      tags:
+        - ClientIntakeAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
+                  type: string
+                  example: client123
+                contractDetails:
+                  type: string
+                  example: Employment contract details
+      responses:
+        '201':
+          description: Employment contract created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+components:
+  schemas:
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Client intake planned successfully

@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  description: APIs for generating job offers and capturing consent
+  title: Job Offers API
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8080/api
+    description: Base path of the API
+
+tags:
+  - name: JobOffersAPI
+    description: APIs for managing job offers and consent
+
+paths:
+  /offers:
+    post:
+      summary: Generate a job offer
+      tags:
+        - JobOffersAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  example: application123
+                offerDetails:
+                  type: string
+                  example: Job offer details
+      responses:
+        '201':
+          description: Job offer generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /offers/{id}/consent:
+    post:
+      summary: Capture consent for a job offer
+      tags:
+        - JobOffersAPI
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                consent:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Consent captured successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Job offer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+components:
+  schemas:
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Job offer generated successfully

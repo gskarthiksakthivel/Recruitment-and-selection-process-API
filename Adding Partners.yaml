@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  description: APIs for adding partners (vendors and clients)
+  title: Partners API
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8080/api
+    description: Base path of the API
+
+tags:
+  - name: PartnersAPI
+    description: APIs for managing partners
+
+paths:
+  /partners/vendors:
+    post:
+      summary: Add a new vendor
+      tags:
+        - PartnersAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Vendor Name
+                contact:
+                  type: string
+                  example: vendor@example.com
+      responses:
+        '201':
+          description: Vendor created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /partners/clients:
+    post:
+      summary: Add a new client
+      tags:
+        - PartnersAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Client Name
+                contact:
+                  type: string
+                  example: client@example.com
+      responses:
+        '201':
+          description: Client created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+components:
+  schemas:
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Vendor created successfully

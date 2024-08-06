@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  description: APIs for the applicant application process
+  title: Applications API
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8080/api
+    description: Base path of the API
+
+tags:
+  - name: ApplicationsAPI
+    description: APIs for managing applications
+
+paths:
+  /applications:
+    post:
+      summary: Apply for a vacancy
+      tags:
+        - ApplicationsAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vacancyId:
+                  type: string
+                  example: vacancy123
+                applicant:
+                  type: string
+                  example: Applicant Name
+                resume:
+                  type: string
+                  example: Base64EncodedResume
+      responses:
+        '201':
+          description: Application submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+components:
+  schemas:
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Application submitted successfully

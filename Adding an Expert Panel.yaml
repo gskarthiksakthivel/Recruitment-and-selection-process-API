@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  description: APIs for adding an expert panel
+  title: Expert Panel API
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8080/api
+    description: Base path of the API
+
+tags:
+  - name: ExpertPanelAPI
+    description: APIs for managing expert panels
+
+paths:
+  /experts:
+    post:
+      summary: Add a new expert panel member
+      tags:
+        - ExpertPanelAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Expert Name
+                email:
+                  type: string
+                  example: expert@example.com
+      responses:
+        '201':
+          description: Expert added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+components:
+  schemas:
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Expert added successfully

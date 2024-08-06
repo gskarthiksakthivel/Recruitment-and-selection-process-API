@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  description: APIs for shortlisting and interview scheduling
+  title: Shortlisting and Interview API
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8080/api
+    description: Base path of the API
+
+tags:
+  - name: ShortlistingAPI
+    description: APIs for managing shortlisting and interviews
+
+paths:
+  /applications/{id}/shortlist:
+    post:
+      summary: Shortlist an applicant
+      tags:
+        - ShortlistingAPI
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Applicant shortlisted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /interviews/technical:
+    post:
+      summary: Schedule a technical interview
+      tags:
+        - ShortlistingAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  example: application123
+                interviewDate:
+                  type: string
+                  format: date-time
+                  example: '2024-08-15T10:00:00Z'
+      responses:
+        '200':
+          description: Technical interview scheduled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /interviews/hr:
+    post:
+      summary: Schedule an HR interview
+      tags:
+        - ShortlistingAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  example: application123
+                interviewDate:
+                  type: string
+                  format: date-time
+                  example: '2024-08-16T11:00:00Z'
+      responses:
+        '200':
+          description: HR interview scheduled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+components:
+  schemas:
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Applicant shortlisted successfully
